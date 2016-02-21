@@ -1,0 +1,17 @@
+Cet agent s'attache à une JVM et affiche les descripteurs de fichiers non fermés à un instant t.
+
+(1) Lancer le programme à monitorer et chercher son PID.
+
+C:\Users\jml>tasklist /V | findstr java
+javaw.exe                     2752 Services                   0     24 576 K Unknown         N/A
+javaw.exe                     5184 Console                    1    701 932 K Running         PSYCHE\JML
+javaw.exe                     2680 Console                    1     79 112 K Running         PSYCHE\JML
+
+(2) Accrocher l'agent vers la JVM avec cette ligne de commande
+C:\Users\jml>%JAVA_HOME_6_X86%\bin\java -cp %JAVA_HOME_6_X86%\lib\tools.jar;C:\workspaces\utils\jvmagent\jvmagent.jar jml.Agent 2680
+
+(3) Jouer un jeu de test avec le programme lancé en (1)
+
+(4) Ouvrir l’URL http://localhost:9090 ou les fichiers non fermés apparaissent, ainsi que l'endroit ou ils ont été ouverts
+
+A compiler avec eclipse et Ant

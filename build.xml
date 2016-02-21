@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="JML-Tools" default="spy">
+	
+	<dirname file="${ant.file}" property="ant.dir"/>
+	
+	<target name="spy">
+		<jar destfile="${ant.dir}/bin/jml/classloaders/bootstrap.jar" >
+			<fileset dir="${ant.dir}/bin" includes="jml/classloaders/bootstrap/**"/>
+		</jar>
+		<jar destfile="${ant.dir}/bin/jml/classloaders/system.jar" >
+			<fileset dir="${ant.dir}/bin" includes="jml/classloaders/system/**"/>
+		</jar>
+		<jar destfile="${ant.dir}/jvmagent.jar" filesetmanifest="skip">
+			<zipfileset src="${ant.dir}/lib/asm-4.1.jar" includes="**"/>
+			<zipfileset src="${ant.dir}/lib/asm-util-4.1.jar" includes="**"/>
+			<zipfileset src="${ant.dir}/lib/asm-commons-4.1.jar" includes="**"/>
+			<zipfileset src="${ant.dir}/lib/jmxtools-1.2.jar" includes="**"/>
+			<fileset dir="${ant.dir}/bin" includes="**">
+				<exclude name="jml/classloaders/bootstrap/**"/>
+				<exclude name="jml/classloaders/system/**"/>
+				<include name="**"/>
+			</fileset>
+		    <manifest>
+		    	<attribute name="Agent-Class" value="jml.Agent"/>
+		    	<attribute name="Main-Class" value="jml.Agent"/>
+				<attribute name="Premain-Class" value="jml.Agent"/>
+		    	<attribute name="Can-Redefine-Classes" value="true"/>
+		    	<attribute name="Can-Retransform-Classes" value="true"/>
+		    	<attribute name="Can-Set-Native-Method-Prefix" value="false"/>
+		    </manifest>
+		</jar>
+		
+	</target>
+	
+</project>
